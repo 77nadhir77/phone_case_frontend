@@ -4,7 +4,8 @@ import { HTMLAttributes } from 'react'
 interface PhoneProps extends HTMLAttributes<HTMLDivElement> {
   imgSrc: string
   dark?: boolean
-  className:string
+  className?:string
+  bg?: string
 }
 
 const Phone = ({ imgSrc, className, dark = false, ...props }: PhoneProps) => {
@@ -20,9 +21,9 @@ const Phone = ({ imgSrc, className, dark = false, ...props }: PhoneProps) => {
         alt='phone'
       />
 
-      <div className='absolute -z-10 inset-0'>
+      <div className={`absolute -z-10 inset-0  ${props.bg? 'bg-' + props.bg : null}`}>
         <img
-          className='object-cover min-w-full min-h-full'
+          className='object-cover w-full h-full'
           src={imgSrc}
           alt='overlaying phone'
         />
