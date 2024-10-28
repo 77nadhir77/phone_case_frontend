@@ -45,8 +45,13 @@ const Design = () => {
 
 	const api = useAxios();
 	const navigate = useNavigate();
-	const { getTheUploadedImage, image, setCropedImageUrl, setPhoneCase } =
-		useUploadContext();
+	const {
+		getTheUploadedImage,
+		image,
+		setCropedImageUrl,
+		setPhoneCase,
+		setOrder,
+	} = useUploadContext();
 
 	useEffect(() => {
 		getTheUploadedImage();
@@ -149,8 +154,13 @@ const Design = () => {
 					material: response.data.phoneCase.material,
 					model: response.data.phoneCase.caseModel,
 					price: response.data.phoneCase.price,
-					description: response.data.phoneCase.description,
 					imageId: response.data.phoneCase.imageId,
+				});
+				setOrder({
+					id: response.data.order.id,
+					status: response.data.order.status,
+					phoneCaseId: response.data.order.phoneCaseId,
+					userId: response.data.order.userId,
 				});
 				localStorage.setItem("cropedImageUrl", response.data.cropedImageUrl);
 				localStorage.setItem(
@@ -164,6 +174,15 @@ const Design = () => {
 						price: response.data.phoneCase.price,
 						description: response.data.phoneCase.description,
 						imageId: response.data.phoneCase.imageId,
+					})
+				);
+				localStorage.setItem(
+					"order",
+					JSON.stringify({
+						id: response.data.order.id,
+						status: response.data.order.status,
+						phoneCaseId: response.data.order.phoneCaseId,
+						userId: response.data.order.userId,
 					})
 				);
 				navigate(`/configure/preview`);

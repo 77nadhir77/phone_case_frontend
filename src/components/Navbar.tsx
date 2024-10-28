@@ -1,11 +1,12 @@
 import React from "react";
 import logo from "../logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../Context/UserProvider";
 import { FaArrowRight } from "react-icons/fa";
 
 const Navbar: React.FC = () => {
 	const { user, logoutUser } = useUserContext();
+	const navigate = useNavigate();
 
 	const handleLogout = () => {
 		logoutUser();
@@ -15,7 +16,7 @@ const Navbar: React.FC = () => {
 		<nav className="sticky top-0 z-50 border-b border-gray-200 backdrop-filter backdrop-blur-lg">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="flex h-16 justify-between">
-					<div className="flex">
+					<div className="flex cursor-pointer" onClick={() => {navigate("/")}}>
 						<div className="shrink-0 flex items-center">
 							<img className="h-8 w-8" src={logo} alt="Logo" />
 							<span className="ml-2 text-xl font-bold text-secondary">

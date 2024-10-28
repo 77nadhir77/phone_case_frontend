@@ -13,7 +13,7 @@ const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({allowedRoles}) => {
     if(!user){
         return <Navigate to="/login" />
     }
-    if(allowedRoles && !allowedRoles.includes(user.role)){
+    if(allowedRoles && !allowedRoles.includes(user.role as string)){
         return <Navigate to="/non-allowed-access" />
     }
 

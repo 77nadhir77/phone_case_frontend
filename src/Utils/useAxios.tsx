@@ -15,12 +15,14 @@ const useAxios = () => {
             timeout: 5000,
             headers: {Authorization: `Bearer ${authTokens?.accessToken}`}
         })
+
+        
     
 AxiosInstance.interceptors.request.use(async(req:InternalAxiosRequestConfig)=> {
 
     
     const user:User = jwtDecode<User>(String(authTokens?.accessToken))
-    const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
+    const isExpired = dayjs.unix(user.exp as number).isBefore(dayjs());
 
     if(!isExpired) return req
 
@@ -33,11 +35,12 @@ AxiosInstance.interceptors.request.use(async(req:InternalAxiosRequestConfig)=> {
         req.headers.Authorization = `Bearer ${response.data.accessToken}`
         return req
     }).catch(err => { 
+        console.log(err)
         localStorage.removeItem('authTokens')
         setUser(null)
         setAuthTokens(null)
-        alert("session expired") 
-        navigate('/login')
+        alert("session expired please login again") 
+        navigate('/')
     })
 
     

@@ -1,4 +1,3 @@
-import React from "react";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -15,6 +14,7 @@ import Upload from "./Pages/Upload/Upload";
 import Design from "./Pages/Design/Design";
 import Preview from "./Pages/Preview/Preview";
 import UploadProvider from "./Context/UploadProvider";
+import Thankyou from "./Pages/Thankyou/Thankyou";
 
 const App = () => {
 	return (
@@ -27,7 +27,6 @@ const App = () => {
 							<Route
 								element={<ProtectedRoutes allowedRoles={["user", "admin"]} />}
 							>
-								<Route path="/" element={<Home />} />
 								<Route
 									path="configure/upload"
 									element={
@@ -52,6 +51,7 @@ const App = () => {
 										</UploadProvider>
 									}
 								/>
+								<Route path="/thank-you" element={<Thankyou />} />
 							</Route>
 							<Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
 								<Route path="/dashboard" element={<Dashboard />} />
@@ -60,6 +60,7 @@ const App = () => {
 								<Route path="/login" element={<Login />} />
 								<Route path="/signup" element={<Signup />} />
 							</Route>
+							<Route path="/" element={<Home />} />
 							<Route path="/non-allowed-access" element={<Restriction />} />
 							<Route path="/*" element={<ErrorPage />} />
 						</Routes>

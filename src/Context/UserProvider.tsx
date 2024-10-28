@@ -27,7 +27,7 @@ export const UserProvider:React.FC<UserProviderProps> = ({children}) => {
 
     const token: string | null = localStorage.getItem("authTokens")
     const [authTokens, setAuthTokens] = useState<authTokenType|null>(token? JSON.parse(token) : null)
-    const [user, setUser] = useState<User|null>(token? jwtDecode<User>(token) : null)
+    const [user, setUser] = useState<User|null>(token? jwtDecode<User>(authTokens?.accessToken as string) : null)
     const [isFetching, setIsFetching] = useState<boolean>(false)
 
     const loginUser = async (e:React.FormEvent<HTMLFormElement>) => {
@@ -54,7 +54,7 @@ export const UserProvider:React.FC<UserProviderProps> = ({children}) => {
     }
 
     const logoutUser = () => {
-        localStorage.removeItem("authTokens")
+        localStorage.clear()
         setAuthTokens(null)
         setUser(null)
     }
