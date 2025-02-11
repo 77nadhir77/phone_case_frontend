@@ -136,7 +136,7 @@ const Design = () => {
 			);
 
 			let response = await api.post(
-				`/upload/crop/${image.filename}`,
+				`/upload/crop/${image.filename.replace("/", "").slice(7)}`,
 				formData,
 				{
 					headers: {
