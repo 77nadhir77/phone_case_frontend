@@ -17,14 +17,14 @@ const Signup: React.FC = () => {
 
 
     // Assuming you have an API endpoint to handle signup
-    await axios.post('http://localhost:8000/signup', {
+    await axios.post(`${process.env.REACT_APP_BACKEND_URL}/signup`, {
         username: username,
         password: password,
       }
     )
     .then(async response => {
       console.log(response);
-      await axios.post("http://localhost:8000/login", {
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/login`, {
           "username": username,
           "password": password,
       })

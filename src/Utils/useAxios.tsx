@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 const useAxios = () => {
     const {authTokens, setUser, setAuthTokens} = useUserContext()
     const navigate = useNavigate() 
-    const baseURL = 'http://localhost:8000'
+    const baseURL = process.env.REACT_APP_BACKEND_URL
 
     const AxiosInstance = axios.create({
             baseURL, 
@@ -19,7 +19,28 @@ const useAxios = () => {
         
     
 AxiosInstance.interceptors.request.use(async(req:InternalAxiosRequestConfig)=> {
+    // object to store ongoing requests cancel tokens
+    const pendingRequests = new Map();
 
+
+
+    // generate an identifier for each request
+    const requestIdentifier = `${req.url}_${req.method}`; 
+
+    // check if there is already a pending request with the same identifier
+    if (pendingRequests.has(requestIdentifier)) {
+        const cancelTokenSource = pendingRequests.get(requestIdentifier);
+        // cancel the previous request
+        cancelTokenSource.cancel('Cancelled due to new request');
+    }
+
+    // create a new CancelToken
+    const newCancelTokenSource = axios.CancelToken.source();
+    req.cancelToken = newCancelTokenSource.token;
+
+    // store the new cancel token source in the map
+    pendingRequests.set(requestIdentifier, newCancelTokenSource);
+    
     
     const user:User = jwtDecode<User>(String(authTokens?.accessToken))
     const isExpired = dayjs.unix(user.exp as number).isBefore(dayjs());
@@ -46,8 +67,6 @@ AxiosInstance.interceptors.request.use(async(req:InternalAxiosRequestConfig)=> {
     
     return req
 })
-
-
 
     return AxiosInstance;
 }

@@ -18,11 +18,10 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const Preview = () => {
 	const [showConfetti, setShowConfetti] = useState(false);
-  const api = useAxios()
-
+  	const api = useAxios()
 	const { cropedImageUrl, phoneCase, order } = useUploadContext();
-  const [loading, setLoading] = useState(false)
-  const [loadingText, setLoadingText] = useState<string | null>(null)
+  	const [loading, setLoading] = useState(false)
+  	const [loadingText, setLoadingText] = useState<string | null>(null)
 
 	useEffect(() => {
 		setShowConfetti(true);
@@ -34,29 +33,29 @@ const Preview = () => {
 		({ label }) => phoneCase?.model === label
 	)!.label;
 
-  let handleCheckout = async() => {
+let handleCheckout = async() => {
     setLoading(true)
     setLoadingText("loading")
-    const stripe = await loadStripe("pk_test_51QByYQKaCF3rCAEa4l8CI7y6y2CWUrpvCNCYNKqkzKUfMI61XMdY7Cr7P8UPIuvSY48wwOBmKwEE1jK4F4QHHfrp00KrXkr3i1")
+    const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUB_KEY!)
 
     if(!stripe)  throw new Error("Stripe secret key is not defined");
 
     const response = await api.post('/create-checkout-session', {
-      price: phoneCase!.price,
-      orderId: order!.id,
+		price: phoneCase!.price,
+		orderId: order!.id,
     })
 
     const result = await stripe?.redirectToCheckout({
-      sessionId: response.data.sessionId,
+    	sessionId: response.data.sessionId,
     })
 
     setLoading(false)
 
     if(result?.error){
-      console.log(result.error)
+    	console.log(result.error)
     }
 
-  }
+	}
 
 
 

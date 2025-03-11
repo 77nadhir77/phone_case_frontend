@@ -37,7 +37,7 @@ export const UserProvider:React.FC<UserProviderProps> = ({children}) => {
         const form = e.target as HTMLFormElement
         const username = (form.elements.namedItem('username') as HTMLInputElement).value
         const password = (form.elements.namedItem('password') as HTMLInputElement).value
-        await axios.post("http://localhost:8000/login", {
+        await axios.post(`${process.env.REACT_APP_BACKEND_URL}/login`, {
             "username": username,
             "password": password,
         })
