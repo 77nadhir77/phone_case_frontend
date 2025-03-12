@@ -78,7 +78,7 @@ const Signup: React.FC = () => {
           <button type="submit" className="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Save</button>
         </div>
       </form>
-      <p>you have already an account? <Link to='/Login'>Login</Link></p>
+      <p>you have already an account? <Link to='/Login'>Login</Link></p>en
     </MaxWidthWrapper>
   );
 };
