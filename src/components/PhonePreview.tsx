@@ -57,6 +57,7 @@ const PhonePreview = ({
 
 			<div className="relative h-full w-full z-40">
 				<img
+					alt="clear phone"
 					src="/clearphone.png"
 					className="pointer-events-none h-full w-full antialiased rounded-md"
 				/>

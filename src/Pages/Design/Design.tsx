@@ -231,7 +231,7 @@ const Design = () => {
 							className="pointer-events-none relative z-40 aspect-[896/1831] w-full"
 						>
 							<img
-								alt="phone image"
+								alt="phone"
 								src="/phone-template.png"
 								className="pointer-events-none z-40 select-none"
 							/>
@@ -264,7 +264,7 @@ const Design = () => {
 						<div className="relative w-full h-full">
 							<img
 								src={image.url}
-								alt="uploaded image"
+								alt="uploaded"
 								className="pointer-events-none h-full w-full object-cover"
 							/>
 						</div>
