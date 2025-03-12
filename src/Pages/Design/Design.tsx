@@ -55,7 +55,7 @@ const Design = () => {
 
 	useEffect(() => {
 		getTheUploadedImage();
-	}, []);
+	}, [getTheUploadedImage]);
 
 	const [renderedDimensions, setRenderedDimensions] = useState<{
 		height: number;

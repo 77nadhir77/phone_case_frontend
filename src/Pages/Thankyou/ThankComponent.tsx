@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useAxios from "../../Utils/useAxios";
 import { ArrowRightIcon, Loader2 } from "lucide-react";
 import { Button } from "../../components/Button";
@@ -16,23 +16,20 @@ const ThankYou = () => {
 	const [searchParams] = useSearchParams();
 	const orderId = searchParams.get("orderId");
 	const croppedImageUrl = localStorage.getItem("cropedImageUrl") || "";
-	const phoneCaseColor =
-		JSON.parse(localStorage.getItem("phoneCase") as string).color || "";
+	const phoneCaseColor = JSON.parse(localStorage.getItem("phoneCase") as string).color || "";
 
 
 	const [order, setOrder] = useState<Order | null>(null);
-
-
+	
+	
 	const [address, setAddress] = useState<Address | null>(null);
-	useEffect(() => {
-		orderPaymentStatus();
-	}, []);
-
-	const orderPaymentStatus = async () => {
+	
+		
+	const orderPaymentStatus = useCallback(async () => {
 		setIsLoading(true);
 		await api
-			.get(`/orders/${orderId}`)
-			.then((res) => {
+		.get(`/orders/${orderId}`)
+		.then((res) => {
 				setOrder(res.data.order);
 				setAddress(res.data.address);
 				localStorage.setItem(
@@ -52,11 +49,15 @@ const ThankYou = () => {
 			.finally(() => {
 				setIsLoading(false);
 			});
-	};
+	},[api, orderId]);
 
+	useEffect(() => {
+		orderPaymentStatus();
+	}, [orderPaymentStatus]);
+		
 	if (isLoading) {
-		return (
-			<div className="w-full h-full mt-24 flex justify-center">
+			return (
+				<div className="w-full h-full mt-24 flex justify-center">
 				<div className="flex flex-col items-center gap-2">
 					<Loader2 className="h-8 w-8 animate-spin text-zinc-50" />
 					<h3 className="font-semibold text-xl">Verifying your payment</h3>
@@ -65,6 +66,7 @@ const ThankYou = () => {
 			</div>
 		);
 	}
+	
 
 	return order && order.status === "Paid" ? (
 		<div className="bg-white">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useAxios from "../../Utils/useAxios";
 import {
 	Card,
@@ -27,26 +27,24 @@ const Dashboard: React.FC = () => {
 	const [lastWeekSum, setLastWeekSum] = useState<number>(0);
 	const [lastMonthSum, setLastMonthSum] = useState<number>(0);
 
-	
 
-	const getOrders = async () => {
-		await api
-			.get("/orders")
-			.then((res) => {
-				console.log(res.data);
-				setOrders(res.data.orders);
-				setLastWeekSum(res.data.lastWeekSum);
-				setLastMonthSum(res.data.lastMonthSum);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
+
+	const getOrders = useCallback(async () => {
+		try {
+			const res = await api.get("/orders");
+			console.log(res.data);
+			setOrders(res.data.orders);
+			setLastWeekSum(res.data.lastWeekSum);
+			setLastMonthSum(res.data.lastMonthSum);
+		} catch (err) {
+			console.error(err);
+		}
+	}, [api]); 
 
 	useEffect(() => {
 		console.log("fetching orders");
 		getOrders();
-	}, []);
+	}, [getOrders])
 
 	const WEEKLY_GOAL = 500;
 	const MONTHLY_GOAL = 2500;

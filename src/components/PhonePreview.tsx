@@ -27,7 +27,7 @@ const PhonePreview = ({
 		handleResize();
 		window.addEventListener("resize", handleResize);
 		return () => window.removeEventListener("resize", handleResize);
-	}, [ref.current]);
+	},[]);
 
 	let caseBackgroundColor = "bg-zinc-950";
 	if (color === "Blue") caseBackgroundColor = "bg-blue-950";
