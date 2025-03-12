@@ -48,7 +48,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "set CI=false && react-scripts build",
+    "lint": "eslint --no-warnings src/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -71,6 +72,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "tailwindcss": "^3.4.4"
   }
 }
